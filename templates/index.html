@@ -30,8 +30,18 @@
     <div class="emoji">📝</div>
     <h1>To Do</h1>
     <div class="buttons">
-        <button onclick="location.href='login.html'">Login</button>
-        <button onclick="location.href='signup.html'">Sign Up</button>
+        <a href="{{ url_for('login') }}"><button>Login</button></a>
+        <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
     </div>
 </body>
 </html>
+
+{% with messages = get_flashed_messages(with_categories=true) %} {% if 
+messages 
+%}
+<div class="container mt-3">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %} {% endwith %}
