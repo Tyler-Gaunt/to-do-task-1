@@ -41,9 +41,6 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# 1 - deelte todo.db, recreate the database using db.py
-# 2 - create a script using gpt - feed gpt your db.py schema and ask it to insert a user and some todos, then run the script
-# 3 - test the login again
 # 4 - create a dashboard.html page with a title
 # 5 - create a route for the dashboard that will return the dashboard.html page and test it!!
 # 6 - go to app.py and ask gpt to generate the code required to use the logged in user and grab the todos from the database

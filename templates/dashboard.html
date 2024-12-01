@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .todo-item input[type="text"] {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .todo-item button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <div>
+            <input type="text" id="new-todo" placeholder="Add a new to-do">
+            <button onclick="addTodo()">Add</button>
+        </div>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        function addTodo() {
+            const todoText = document.getElementById('new-todo').value;
+            if (todoText === '') return;
+
+            const todoList = document.getElementById('todo-list');
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = todoText;
+            input.readOnly = true;
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.onclick = () => {
+                if (input.readOnly) {
+                    input.readOnly = false;
+                    editButton.textContent = 'Save';
+                } else {
+                    input.readOnly = true;
+                    editButton.textContent = 'Edit';
+                }
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = () => {
+                todoList.removeChild(li);
+            };
+
+            li.appendChild(checkbox);
+            li.appendChild(input);
+            li.appendChild(editButton);
+            li.appendChild(deleteButton);
+            todoList.appendChild(li);
+
+            document.getElementById('new-todo').value = '';
+        }
+    </script>
+<div>
+    <h2 style="text-decoration: underline;">Incomplete:</h2>
+    <ul id="incomplete-todo-list"></ul>
+</div>
+<div>
+    <h2 style="text-decoration: underline;">Completed:</h2>
+    <ul id="completed-todo-list"></ul>
+</div>
+
+<script>
+    function addTodo() {
+        const todoText = document.getElementById('new-todo').value;
+        if (todoText === '') return;
+
+        const incompleteTodoList = document.getElementById('incomplete-todo-list');
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.onchange = () => {
+            if (checkbox.checked) {
+                document.getElementById('completed-todo-list').appendChild(li);
+            } else {
+                incompleteTodoList.appendChild(li);
+            }
+        };
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = todoText;
+        input.readOnly = true;
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.onclick = () => {
+            if (input.readOnly) {
+                input.readOnly = false;
+                editButton.textContent = 'Save';
+            } else {
+                input.readOnly = true;
+                editButton.textContent = 'Edit';
+            }
+        };
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = () => {
+            li.parentNode.removeChild(li);
+        };
+
+        li.appendChild(checkbox);
+        li.appendChild(input);
+        li.appendChild(editButton);
+        li.appendChild(deleteButton);
+        incompleteTodoList.appendChild(li);
+
+        document.getElementById('new-todo').value = '';
+    }
+</script>
