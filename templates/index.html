@@ -3,45 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do</title>
+    <title>To-Do List Home</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         body {
+            font-family: 'Roboto', sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
         }
-        .emoji {
-            font-size: 100px;
+        .container {
+            text-align: center;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
         }
-        .buttons {
-            margin-top: 20px;
+        .container h1 {
+            margin-bottom: 20px;
+            color: #343a40;
         }
-        .buttons button {
-            margin: 0 10px;
-            padding: 10px 20px;
+        .container button {
+            margin: 10px;
+            padding: 14px 28px;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .container button:hover {
+            transform: translateY(-2px);
+        }
+        .login-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .login-btn:hover {
+            background-color: #218838;
+        }
+        .signup-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .signup-btn:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="emoji">📝</div>
-    <h1>To Do</h1>
-    <div class="buttons">
-        <a href="{{ url_for('login') }}"><button>Login</button></a>
-        <a href="{{ url_for('signup') }}"><button>Sign Up</button></a>
+    <div class="container">
+        <div class="logo">📝</div>
+        <h1>Welcome to Your To-Do List</h1>
+        <a href="/templates/login.html"><button class="login-btn">Log In</button></a>
+        <a href="/templates/signup.html"><button class="signup-btn">Sign Up</button></a>
     </div>
+    <footer>
+        &copy; 2023 To-Do List. All rights reserved.
+    </footer>
 </body>
 </html>
-
-{% with messages = get_flashed_messages(with_categories=true) %} {% if 
-messages 
-%}
-<div class="container mt-3">
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
-    {% endfor %}
-</div>
-{% endif %} {% endwith %}

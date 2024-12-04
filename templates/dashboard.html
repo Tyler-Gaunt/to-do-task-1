@@ -6,25 +6,83 @@
     <title>To-Do List Dashboard</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .todo-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
             max-width: 600px;
-            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        input[type="text"] {
+            width: calc(100% - 90px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
         .todo-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
         }
         .todo-item input[type="text"] {
             flex: 1;
             margin-right: 10px;
+            border: none;
+            background: transparent;
+        }
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
         }
         .todo-item button {
             margin-left: 5px;
+            background-color: #28a745;
+        }
+        .todo-item button:hover {
+            background-color: #218838;
+        }
+        .todo-item button.delete {
+            background-color: #dc3545;
+        }
+        .todo-item button.delete:hover {
+            background-color: #c82333;
+        }
+        .todo-lists {
+            margin-top: 20px;
+        }
+        .todo-lists h2 {
+            text-decoration: underline;
+            color: #007bff;
         }
     </style>
 </head>
@@ -36,6 +94,16 @@
             <button onclick="addTodo()">Add</button>
         </div>
         <ul id="todo-list"></ul>
+        <div class="todo-lists">
+            <div>
+                <h2>Incomplete:</h2>
+                <ul id="incomplete-todo-list"></ul>
+            </div>
+            <div>
+                <h2>Completed:</h2>
+                <ul id="completed-todo-list"></ul>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -43,12 +111,19 @@
             const todoText = document.getElementById('new-todo').value;
             if (todoText === '') return;
 
-            const todoList = document.getElementById('todo-list');
+            const incompleteTodoList = document.getElementById('incomplete-todo-list');
             const li = document.createElement('li');
             li.className = 'todo-item';
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
+            checkbox.onchange = () => {
+                if (checkbox.checked) {
+                    document.getElementById('completed-todo-list').appendChild(li);
+                } else {
+                    incompleteTodoList.appendChild(li);
+                }
+            };
 
             const input = document.createElement('input');
             input.type = 'text';
@@ -69,76 +144,19 @@
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
+            deleteButton.className = 'delete';
             deleteButton.onclick = () => {
-                todoList.removeChild(li);
+                li.parentNode.removeChild(li);
             };
 
             li.appendChild(checkbox);
             li.appendChild(input);
             li.appendChild(editButton);
             li.appendChild(deleteButton);
-            todoList.appendChild(li);
+            incompleteTodoList.appendChild(li);
 
             document.getElementById('new-todo').value = '';
         }
     </script>
-<div>
-    <h2 style="text-decoration: underline;">Incomplete:</h2>
-    <ul id="incomplete-todo-list"></ul>
-</div>
-<div>
-    <h2 style="text-decoration: underline;">Completed:</h2>
-    <ul id="completed-todo-list"></ul>
-</div>
-
-<script>
-    function addTodo() {
-        const todoText = document.getElementById('new-todo').value;
-        if (todoText === '') return;
-
-        const incompleteTodoList = document.getElementById('incomplete-todo-list');
-        const li = document.createElement('li');
-        li.className = 'todo-item';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.onchange = () => {
-            if (checkbox.checked) {
-                document.getElementById('completed-todo-list').appendChild(li);
-            } else {
-                incompleteTodoList.appendChild(li);
-            }
-        };
-
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = todoText;
-        input.readOnly = true;
-
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.onclick = () => {
-            if (input.readOnly) {
-                input.readOnly = false;
-                editButton.textContent = 'Save';
-            } else {
-                input.readOnly = true;
-                editButton.textContent = 'Edit';
-            }
-        };
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = () => {
-            li.parentNode.removeChild(li);
-        };
-
-        li.appendChild(checkbox);
-        li.appendChild(input);
-        li.appendChild(editButton);
-        li.appendChild(deleteButton);
-        incompleteTodoList.appendChild(li);
-
-        document.getElementById('new-todo').value = '';
-    }
-</script>
+</body>
+</html>
